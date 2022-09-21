@@ -1,0 +1,4 @@
+cloudscraper
+tabulate
+bs4
+image-to-ascii-pyaoponto
