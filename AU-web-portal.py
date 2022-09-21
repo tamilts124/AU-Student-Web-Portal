@@ -65,7 +65,7 @@ def web_portal(regno, dob):
     if 'Invalid data' in student_main_page:print('> Invalid Captcha...');sys.exit(1)
     elif 'Invalid Register number or Date of birth or Profile Not Found ...' in student_main_page:print('> Invalid Register number or Date of birth or Profile Not Found ...');sys.exit(1)
     data =general_info(student_main_page);clear();print()
-    for k, v in zip(data.keys(), data.values()):print(' '+k+' : '+v)
+    for k, v in data.items():print(' '+k+' : '+v)
     print();print('>> Getting Results...')
     token =get_token(student_main_page)
     student_result_page =request_resourse('http://coe1.annauniv.edu/home/students_corner.php', data={token:token, 'ExamResults': '', 'univ_reg_no': ''}, cookies=cookies, method='POST').text
