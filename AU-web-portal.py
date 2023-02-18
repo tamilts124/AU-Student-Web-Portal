@@ -2,7 +2,7 @@ import optparse, base64, sys, os, io
 from time import sleep
 import cloudscraper, tabulate
 from bs4 import BeautifulSoup
-from image_to_ascii import ImageToAscii
+from image_to_ascii import ImageToAscii # pip install image-to-ascii-pyaoponto
 
 parser =optparse.OptionParser()
 scraper =cloudscraper.create_scraper(browser={'browser': 'firefox','platform': 'windows','mobile': False})
@@ -47,8 +47,8 @@ def get_result(result_page):
                 user_info[th[0].string] =th[1].string
         for tr in table_rows[1:]:
             th=tr.find_all('th')
-            if not [th[0].string, th[1].string, th[2].string, th[3].string] in result:
-                result.append([th[0].string, th[1].string, th[2].string, th[3].string])
+            if (th[0].string, th[1].string, th[2].string, th[3].string) in result: result.append((' ', ' ', ' ', ' '))
+            else: result.append((th[0].string, th[1].string, th[2].string, th[3].string))
     return user_info, result
 
 def web_portal(regno, dob):
@@ -71,7 +71,7 @@ def web_portal(regno, dob):
     student_result_page =request_resourse('http://coe1.annauniv.edu/home/students_corner.php', data={token:token, 'ExamResults': '', 'univ_reg_no': ''}, cookies=cookies, method='POST').text
     sleep(2);clear();print()
     user_info, result =get_result(student_result_page)
-    for k, v in zip(user_info.keys(), user_info.values()):print(k+v)
+    for k, v in user_info.items():print(k+v)
     else:print()
     print(tabulate.tabulate(result[1:], headers=result[0]))
     
